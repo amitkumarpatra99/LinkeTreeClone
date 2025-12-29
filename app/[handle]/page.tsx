@@ -3,8 +3,19 @@ import { notFound } from "next/navigation";
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function Page({ params }) {
-    const handle = params.handle;
+interface LinkType {
+    link: string;
+    linktext: string;
+}
+
+interface User {
+    handle: string;
+    pic?: string;
+    links?: LinkType[];
+}
+
+export default async function Page({ params }: { params: Promise<{ handle: string }> }) {
+    const { handle } = await params;
 
     if (!handle) {
         return notFound();
@@ -12,7 +23,7 @@ export default async function Page({ params }) {
 
     const client = await clientPromise;
     const db = client.db("linktree");
-    const collection = db.collection("users");
+    const collection = db.collection<User>("users");
 
     const user = await collection.findOne({ handle: handle });
 
@@ -34,6 +45,7 @@ export default async function Page({ params }) {
                 <div className="flex flex-col items-center gap-4 text-center">
                     <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl">
                         {/* Fallback image if user.pic is empty or invalid */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src={user.pic || "https://avatars.githubusercontent.com/u/10?v=4"}
                             alt={user.handle}

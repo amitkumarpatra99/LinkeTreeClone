@@ -4,8 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Footer from '@/components/Footer'
 
+interface User {
+    handle: string;
+    pic?: string;
+    links?: any[];
+}
+
 const Discover = () => {
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<User[]>([]);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
 
@@ -64,7 +70,8 @@ const Discover = () => {
                                     <div className="w-full h-full absolute top-0 left-0 bg-gradient-to-tr from-[#d2e823]/0 to-[#d2e823]/5 group-hover:to-[#d2e823]/10 transition-colors"></div>
 
                                     <div className="w-20 h-20 rounded-full bg-gray-700 overflow-hidden border-2 border-white/10 group-hover:border-[#d2e823] transition-colors relative z-10">
-                                        <img src={user.pic || "https://avatars.githubusercontent.com/u/10?v=4"} alt={user.handle} className="w-full h-full object-cover" />
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img src={user.pic || "https://avatars.githubusercontent.com/u/10?v=4"} alt={user.handle} className="w-full h-full object-cover" />
                                     </div>
 
                                     <div className="text-center relative z-10">
@@ -74,7 +81,7 @@ const Discover = () => {
                                 </div>
                             </Link>
                         )) : (
-                            <div className="col-span-full text-center text-gray-500 py-12">No profiles found matching "{search}"</div>
+                            <div className="col-span-full text-center text-gray-500 py-12">No profiles found matching &quot;{search}&quot;</div>
                         )}
                     </div>
                 )}

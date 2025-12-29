@@ -4,8 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 // import { ToastContainer, toast } from 'react-toastify';
 
+interface LinkItem {
+  link: string;
+  linktext: string;
+}
+
 const Generate = () => {
-  const [links, setLinks] = useState([{ link: "", linktext: "" }]);
+  const [links, setLinks] = useState<LinkItem[]>([{ link: "", linktext: "" }]);
   const [handle, setHandle] = useState("");
   const [pic, setPic] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,13 +19,13 @@ const Generate = () => {
     setLinks([...links, { link: "", linktext: "" }]);
   }
 
-  const removeLinkField = (index) => {
+  const removeLinkField = (index: number) => {
     const newLinks = [...links];
     newLinks.splice(index, 1);
     setLinks(newLinks);
   }
 
-  const handleLinkChange = (index, key, value) => {
+  const handleLinkChange = (index: number, key: keyof LinkItem, value: string) => {
     const newLinks = [...links];
     newLinks[index][key] = value;
     setLinks(newLinks);
@@ -46,7 +51,7 @@ const Generate = () => {
       method: "POST",
       headers: myHeaders,
       body: raw,
-      redirect: "follow"
+      redirect: "follow" as RequestRedirect
     };
 
     try {
@@ -57,7 +62,7 @@ const Generate = () => {
       } else {
         alert(result.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       alert("An error occurred: " + error.message);
     } finally {
       setLoading(false);
@@ -170,7 +175,10 @@ const Generate = () => {
               <div className="w-full h-full bg-[#0a0a0a] flex flex-col p-6 items-center pt-12 gap-6 overflow-y-auto no-scrollbar">
                 {/* Preview Content */}
                 <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border-2 border-[#333] overflow-hidden">
-                  {pic && <img src={pic} className="w-full h-full object-cover" alt="Preview" />}
+                  {pic && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={pic} className="w-full h-full object-cover" alt="Preview" />
+                  )}
                 </div>
                 <div className="text-center w-full">
                   <div className="font-bold text-white mb-1">@{handle || "yourname"}</div>

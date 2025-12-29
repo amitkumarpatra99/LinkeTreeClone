@@ -8,7 +8,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const handleLogin = (e) => {
+    const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         // Since we don't have real auth, we just simulate a login by sending them to the generate page
         // with their handle pre-filled (if we implemented query params there) or just redirecting.
@@ -63,7 +63,7 @@ const Login = () => {
                     </form>
 
                     <div className="text-center mt-8 text-sm text-gray-400">
-                        Don't have an account? <Link href="/generate" className="text-white underline hover:text-[#d2e823] transition-colors">Sign up</Link>
+                        Don&apos;t have an account? <Link href="/generate" className="text-white underline hover:text-[#d2e823] transition-colors">Sign up</Link>
                     </div>
                 </div>
             </div>
