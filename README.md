@@ -1,6 +1,6 @@
 # 🌲 LinkTree Clone
 
-![LinkTree Clone Hero](https://i.imgur.com/your-mockup-here.png)
+![LinkTree Clone Hero](./public/Project.png)
 
 > **Everything you are. In one, simple link in bio.**
 > A premium, high-performance Linktree clone built with Next.js 14 and MongoDB.
@@ -58,13 +58,15 @@
 ```
 ├── app/
 │   ├── api/            # API Routes (Users, Add, etc.)
+│   │   ├── add/        # Add Link/User Route
+│   │   └── users/      # Fetch Users Route
 │   ├── [handle]/       # Dynamic Profile Pages
 │   ├── discover/       # Discover Page
 │   ├── generate/       # Dashboard & Link Creation
 │   ├── login/          # Login UI
 │   ├── globals.css     # Global Styles (Tailwind + Custom)
-│   ├── layout.js       # Root Layout
-│   └── page.js         # Landing Page
+│   ├── layout.tsx      # Root Layout
+│   └── page.tsx        # Landing Page
 ├── components/         # Reusable Components (Navbar, Footer)
 ├── lib/                # Library code (MongoDB client)
 └── public/             # Static Assets
@@ -77,6 +79,35 @@
 - **Database**: [MongoDB](https://www.mongodb.com/)
 - **Font**: [Outfit](https://fonts.google.com/specimen/Outfit)
 - **Deployment**: Vercel (Recommended)
+
+## 🔌 API Endpoints
+
+### 1. Add/Update User & Links
+- **URL**: `/api/add`
+- **Method**: `POST`
+- **Description**: Creates a new user profile or updates an existing one with links.
+- **Body**:
+  ```json
+  {
+    "handle": "yourname",
+    "pic": "url_to_image",
+    "links": [
+      { "link": "https://github.com", "linktext": "GitHub" }
+    ]
+  }
+  ```
+
+### 2. Fetch All Users
+- **URL**: `/api/users`
+- **Method**: `GET`
+- **Description**: Retrieves a list of all registered users (limited to 50).
+- **Response**:
+  ```json
+  {
+    "success": true,
+    "users": [...]
+  }
+  ```
 
 ## 🤝 Contributing
 
