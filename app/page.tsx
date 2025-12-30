@@ -18,7 +18,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-28 md:pt-32 overflow-hidden selection:bg-[#d2e823] selection:text-black">
+    <main className="min-h-screen bg-[#0a0a0a] pt-32 md:pt-40 overflow-hidden selection:bg-[#d2e823] selection:text-black">
 
       {/* Background Gradients */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">

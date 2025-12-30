@@ -38,7 +38,7 @@ const Signup = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center p-6 selection:bg-[#d2e823] selection:text-black relative overflow-hidden">
+        <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center pt-32 md:pt-40 p-6 selection:bg-[#d2e823] selection:text-black relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d2e823]/5 rounded-full blur-[120px] pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none"></div>
