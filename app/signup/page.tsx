@@ -3,37 +3,35 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-const Login = () => {
+const Signup = () => {
     const [handle, setHandle] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            const res = await fetch('/api/login', {
+            const res = await fetch('/api/signup', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ handle, password })
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ handle, email, password })
             });
 
             const data = await res.json();
             if (data.success) {
-                // Store token and user info
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
-                
-                alert("Login successful!");
-                router.push('/dashboard');
+                alert("Account created! Please log in.");
+                router.push('/login');
             } else {
                 alert(data.message);
             }
         } catch (error) {
-            alert("An error occurred during login");
-            console.error(error);
+            alert("An error occurred");
         } finally {
             setLoading(false);
         }
@@ -51,17 +49,26 @@ const Login = () => {
                         <Link href="/" className="text-3xl font-bold tracking-tighter mb-2 inline-block">
                             Link<span className="text-[#d2e823]">Tree</span>
                         </Link>
-                        <h2 className="text-xl font-semibold mt-4">Welcome back</h2>
-                        <p className="text-gray-400 text-sm mt-2">Login to your Linktree.</p>
+                        <h2 className="text-xl font-semibold mt-4">Create your account</h2>
+                        <p className="text-gray-400 text-sm mt-2">Join Linktree today.</p>
                     </div>
 
-                    <form onSubmit={handleLogin} className="flex flex-col gap-5">
+                    <form onSubmit={handleSignup} className="flex flex-col gap-5">
                         <div className="space-y-1">
                             <input
                                 value={handle}
                                 onChange={(e) => setHandle(e.target.value)}
                                 type="text"
-                                placeholder="Username / Handle"
+                                placeholder="Choose a Handle"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-[#d2e823] transition-colors"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                type="email"
+                                placeholder="Email address"
                                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-[#d2e823] transition-colors"
                             />
                         </div>
@@ -80,12 +87,12 @@ const Login = () => {
                             disabled={loading}
                             className="bg-[#d2e823] hover:bg-[#c1d620] text-black font-bold py-4 rounded-xl transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(210,232,35,0.3)] mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? 'Logging in...' : 'Log in'}
+                            {loading ? 'Creating Account...' : 'Sign up'}
                         </button>
                     </form>
 
                     <div className="text-center mt-8 text-sm text-gray-400">
-                        Don&apos;t have an account? <Link href="/signup" className="text-white underline hover:text-[#d2e823] transition-colors">Sign up</Link>
+                        Already have an account? <Link href="/login" className="text-white underline hover:text-[#d2e823] transition-colors">Log in</Link>
                     </div>
                 </div>
             </div>
@@ -93,4 +100,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Signup

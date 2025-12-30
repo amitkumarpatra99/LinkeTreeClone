@@ -1,8 +1,22 @@
+"use client";
+import React, { useState } from 'react';
 import Image from "next/image";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Footer from '@/components/Footer';
 
 export default function Home() {
+  const [handle, setHandle] = useState("");
+  const router = useRouter();
+
+  const handleClaim = () => {
+    if (handle) {
+      router.push(`/signup?handle=${handle}`);
+    } else {
+      router.push('/signup');
+    }
+  }
+
   return (
     <main className="min-h-screen bg-[#0a0a0a] pt-32 overflow-hidden selection:bg-[#d2e823] selection:text-black">
 
@@ -30,11 +44,16 @@ export default function Home() {
                 <input
                   type="text"
                   placeholder="yourname"
+                  value={handle}
+                  onChange={(e) => setHandle(e.target.value)}
                   className="w-full bg-transparent text-white p-3 focus:outline-none font-medium placeholder-gray-600"
                 />
               </div>
             </div>
-            <button className="bg-[#d2e823] hover:bg-[#c1d620] text-black font-bold py-4 px-8 rounded-lg whitespace-nowrap transition-transform hover:scale-105 shadow-[0_0_20px_rgba(210,232,35,0.3)]">
+            <button 
+              onClick={handleClaim}
+              className="bg-[#d2e823] hover:bg-[#c1d620] text-black font-bold py-4 px-8 rounded-lg whitespace-nowrap transition-transform hover:scale-105 shadow-[0_0_20px_rgba(210,232,35,0.3)]"
+            >
               Claim your Linktree
             </button>
           </div>
