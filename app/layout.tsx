@@ -2,6 +2,8 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ReactNode } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -16,6 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={`${outfit.className} bg-[#0a0a0a] text-white antialiased selection:bg-[#d2e823] selection:text-black`}>
         <Navbar />
         {children}
+        <ToastContainer position="bottom-right" theme="dark" />
       </body>
     </html>
   );

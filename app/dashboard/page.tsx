@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
+import { toast } from 'react-toastify';
+
 interface LinkItem {
   link: string;
   linktext: string;
@@ -12,6 +14,8 @@ const Dashboard = () => {
   const [links, setLinks] = useState<LinkItem[]>([{ link: "", linktext: "" }]);
   const [handle, setHandle] = useState("");
   const [pic, setPic] = useState("");
+  const [bio, setBio] = useState("");
+  const [theme, setTheme] = useState("default");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -33,6 +37,8 @@ const Dashboard = () => {
         if (data.success) {
             setHandle(data.user.handle);
             setPic(data.user.pic || "");
+            setBio(data.user.bio || "");
+            setTheme(data.user.theme || "default");
             setLinks(data.user.links && data.user.links.length > 0 ? data.user.links : [{ link: "", linktext: "" }]);
         } else {
             localStorage.removeItem('token');
@@ -85,17 +91,19 @@ const Dashboard = () => {
             body: JSON.stringify({
                 links: links,
                 handle: handle,
-                pic: pic
+                pic: pic,
+                bio: bio,
+                theme: theme
             })
         });
         const result = await res.json();
         if (result.success) {
-            alert("Profile saved successfully!");
+            toast.success("Profile saved successfully!");
         } else {
-            alert(result.message);
+            toast.error(result.message);
         }
     } catch (error: any) {
-        alert("Error saving profile: " + error.message);
+        toast.error("Error saving profile: " + error.message);
     } finally {
         setLoading(false);
     }
@@ -200,20 +208,65 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Step 3: Picture */}
+            {/* Step 3: Picture & Bio */}
             <div className="space-y-4">
               <h2 className='text-xl flex items-center gap-3 font-bold'>
                 <div className="w-8 h-8 rounded-full bg-[#d2e823] text-black flex items-center justify-center text-sm font-bold shadow-[0_0_10px_rgba(210,232,35,0.2)]">3</div>
-                Profile Picture
+                Profile Details
               </h2>
-              <div className="bg-[#151515] p-2 rounded-2xl border border-white/5">
-                <input
-                    value={pic}
-                    onChange={e => setPic(e.target.value)}
-                    className='w-full bg-transparent border-none rounded-xl px-4 py-3 focus:outline-none text-white placeholder-gray-600'
-                    type="text"
-                    placeholder='Paste Image URL (https://...)'
-                />
+              <div className="bg-[#151515] p-5 rounded-2xl border border-white/5 flex flex-col gap-4">
+                <div>
+                    <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2 block">Profile Picture URL</label>
+                    <input
+                        value={pic}
+                        onChange={e => setPic(e.target.value)}
+                        className='w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#d2e823] transition-colors text-white placeholder-gray-600 text-sm'
+                        type="text"
+                        placeholder='https://...'
+                    />
+                </div>
+                <div>
+                     <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2 block">Bio</label>
+                    <textarea
+                        value={bio}
+                        onChange={e => setBio(e.target.value)}
+                        className='w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#d2e823] transition-colors text-white placeholder-gray-600 text-sm h-24 resize-none'
+                        placeholder='Tell the world a little bit about yourself...'
+                    />
+                </div>
+              </div>
+            </div>
+
+            {/* Step 4: Theme */}
+            <div className="space-y-4">
+              <h2 className='text-xl flex items-center gap-3 font-bold'>
+                <div className="w-8 h-8 rounded-full bg-[#d2e823] text-black flex items-center justify-center text-sm font-bold shadow-[0_0_10px_rgba(210,232,35,0.2)]">4</div>
+                Select Theme
+              </h2>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                    {  id: 'default', name: 'Dark Mode', bg: 'bg-[#0a0a0a]' },
+                    {  id: 'light', name: 'Light Mode', bg: 'bg-[#f4f4f4]' },
+                    {  id: 'gradient', name: 'Gradient', bg: 'bg-gradient-to-br from-indigo-900 to-purple-900' },
+                    {  id: 'forest', name: 'Forest', bg: 'bg-[#1a2e1a]' }
+                ].map((t) => (
+                    <button
+                        key={t.id}
+                        onClick={() => setTheme(t.id)}
+                        className={`p-1 rounded-2xl border-2 transition-all ${theme === t.id ? 'border-[#d2e823] scale-105' : 'border-transparent hover:scale-105'} flex flex-col gap-2 group`}
+                    >
+                         <div className={`h-24 w-full rounded-xl ${t.bg} border border-white/10 relative overflow-hidden shadow-lg`}>
+                            {theme === t.id && (
+                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                    <div className="w-8 h-8 rounded-full bg-[#d2e823] flex items-center justify-center text-black">
+                                       ✓
+                                    </div>
+                                </div>
+                            )}
+                         </div>
+                         <span className={`text-sm font-medium ${theme === t.id ? 'text-[#d2e823]' : 'text-gray-400 group-hover:text-white'}`}>{t.name}</span>
+                    </button>
+                ))}
               </div>
             </div>
 
@@ -235,14 +288,21 @@ const Dashboard = () => {
             <h3 className="text-gray-400 text-sm font-medium mb-6 uppercase tracking-widest hidden lg:block">Live Preview</h3>
             
             <div className="w-[320px] h-[640px] bg-black border-[12px] border-[#222] rounded-[3.5rem] shadow-2xl overflow-hidden relative ring-1 ring-white/10">
-              <div className="w-full h-full bg-[#0a0a0a] flex flex-col p-6 items-center pt-12 gap-6 overflow-y-auto no-scrollbar relative">
+              <div 
+                className={`w-full h-full flex flex-col p-6 items-center pt-12 gap-6 overflow-y-auto no-scrollbar relative transition-colors duration-500
+                ${theme === 'light' ? 'bg-[#f4f4f4] text-black' : 
+                  theme === 'gradient' ? 'bg-gradient-to-br from-indigo-900 to-purple-900 text-white' : 
+                  theme === 'forest' ? 'bg-[#1a2e1a] text-white' : 
+                  'bg-[#0a0a0a] text-white'
+                }`}
+              >
                 
                 {/* Status Bar */}
-                <div className="absolute top-0 w-full h-6 px-6 flex justify-between items-center text-[10px] text-white opacity-50 z-20">
+                <div className={`absolute top-0 w-full h-6 px-6 flex justify-between items-center text-[10px] opacity-50 z-20 ${theme === 'light' ? 'text-black' : 'text-white'}`}>
                     <span>9:41</span>
                     <div className="flex gap-1">
-                        <div className="w-3 h-3 rounded-full bg-white"></div>
-                        <div className="w-3 h-3 rounded-full bg-white"></div>
+                        <div className={`w-3 h-3 rounded-full ${theme === 'light' ? 'bg-black' : 'bg-white'}`}></div>
+                        <div className={`w-3 h-3 rounded-full ${theme === 'light' ? 'bg-black' : 'bg-white'}`}></div>
                     </div>
                 </div>
 
@@ -257,14 +317,20 @@ const Dashboard = () => {
                     )}
                     </div>
                     <div className="text-center w-full">
-                    <div className="font-bold text-white text-xl mb-1">@{handle || "yourname"}</div>
-                    <p className="text-xs text-gray-500">Bio description can go here</p>
+                        <div className="font-bold text-xl mb-1">@{handle || "yourname"}</div>
+                        <p className={`text-xs ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>{bio || "Bio description can go here"}</p>
                     </div>
 
                     <div className="w-full flex flex-col gap-3 mt-2">
                     {links.map((link, i) => (
                         link.linktext && (
-                        <div key={i} className="w-full p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm flex items-center justify-center text-sm font-semibold text-white break-words text-center hover:bg-white/10 transition-colors cursor-pointer shadow-sm">
+                        <div key={i} 
+                            className={`w-full p-4 rounded-xl border backdrop-blur-sm flex items-center justify-center text-sm font-semibold break-words text-center transition-colors cursor-pointer shadow-sm
+                            ${theme === 'light' 
+                                ? 'bg-white border-gray-200 text-black hover:bg-gray-50' 
+                                : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
+                            }`}
+                        >
                             {link.linktext}
                         </div>
                         )
@@ -279,7 +345,10 @@ const Dashboard = () => {
 
                 {/* Bottom branding */}
                  <div className="mt-auto py-4 opacity-30">
-                     <div className="transform scale-75 flex gap-1 font-bold"><span className="text-white">Link</span><span className="text-[#d2e823]">Tree</span></div>
+                     <div className="transform scale-75 flex gap-1 font-bold">
+                        <span className={theme === 'light' ? 'text-black' : 'text-white'}>Link</span>
+                        <span className="text-[#d2e823]">Tree</span>
+                     </div>
                  </div>
 
               </div>
