@@ -55,30 +55,32 @@ const Login = () => {
                         <p className="text-gray-400 text-sm mt-2">Login to your Linktree.</p>
                     </div>
 
-                    <form onSubmit={handleLogin} className="flex flex-col gap-5">
-                        <div className="space-y-1">
-                            <input
-                                value={handle}
-                                onChange={(e) => setHandle(e.target.value)}
-                                type="text"
-                                placeholder="Username / Handle"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-[#d2e823] transition-colors"
-                            />
-                        </div>
-                        <div className="space-y-1">
-                            <input
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                type="password"
-                                placeholder="Password"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-[#d2e823] transition-colors"
-                            />
+                    <form onSubmit={handleLogin} className="flex flex-col gap-6">
+                        <div className="space-y-4">
+                            <div className="group">
+                                <input
+                                    value={handle}
+                                    onChange={(e) => setHandle(e.target.value)}
+                                    type="text"
+                                    placeholder="Username / Handle"
+                                    className="w-full bg-[#151515] border border-white/5 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#d2e823] transition-all placeholder-gray-600 font-medium"
+                                />
+                            </div>
+                            <div className="group">
+                                <input
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    type="password"
+                                    placeholder="Password"
+                                    className="w-full bg-[#151515] border border-white/5 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#d2e823] transition-all placeholder-gray-600 font-medium"
+                                />
+                            </div>
                         </div>
 
                         <button 
                             type="submit" 
                             disabled={loading}
-                            className="bg-[#d2e823] hover:bg-[#c1d620] text-black font-bold py-4 rounded-xl transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(210,232,35,0.3)] mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-[#d2e823] hover:bg-[#c1d620] text-black font-bold py-5 rounded-2xl transition-all hover:scale-[1.01] active:scale-[0.99] shadow-[0_0_20px_rgba(210,232,35,0.2)] disabled:opacity-50 disabled:cursor-not-allowed mt-2"
                         >
                             {loading ? 'Logging in...' : 'Log in'}
                         </button>

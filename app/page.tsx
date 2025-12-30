@@ -18,7 +18,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-32 overflow-hidden selection:bg-[#d2e823] selection:text-black">
+    <main className="min-h-screen bg-[#0a0a0a] pt-28 md:pt-32 overflow-hidden selection:bg-[#d2e823] selection:text-black">
 
       {/* Background Gradients */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
@@ -27,32 +27,32 @@ export default function Home() {
       </div>
 
       <section className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-        <div className="flex flex-col gap-8 max-w-2xl animate-fade-in">
-          <h1 className="font-extrabold text-5xl sm:text-7xl leading-[1.1] tracking-tight">
+        <div className="flex flex-col gap-6 md:gap-8 max-w-2xl animate-fade-in">
+          <h1 className="font-extrabold text-4xl sm:text-6xl md:text-7xl leading-[1.1] tracking-tight">
             Everything you are. In one, simple <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d2e823] to-green-400">link in bio.</span>
           </h1>
 
-          <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
+          <p className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-lg">
             Join 50M+ people using Linktree for their link in bio. One link to help you share everything you create, curate and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full max-w-lg">
+          <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full max-w-lg">
             <div className="relative group w-full">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#d2e823] to-green-500 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-              <div className="relative flex items-center bg-[#1a1a1a] rounded-lg p-1">
-                <span className="pl-4 pr-2 text-gray-500 font-medium">linktr.ee/</span>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#d2e823] to-green-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative flex items-center bg-[#1a1a1a] rounded-2xl p-1 border border-white/5">
+                <span className="pl-5 pr-2 text-gray-500 font-medium whitespace-nowrap">linktr.ee/</span>
                 <input
                   type="text"
                   placeholder="yourname"
                   value={handle}
                   onChange={(e) => setHandle(e.target.value)}
-                  className="w-full bg-transparent text-white p-3 focus:outline-none font-medium placeholder-gray-600"
+                  className="w-full bg-transparent text-white p-4 focus:outline-none font-medium placeholder-gray-600"
                 />
               </div>
             </div>
             <button 
               onClick={handleClaim}
-              className="bg-[#d2e823] hover:bg-[#c1d620] text-black font-bold py-4 px-8 rounded-lg whitespace-nowrap transition-transform hover:scale-105 shadow-[0_0_20px_rgba(210,232,35,0.3)]"
+              className="bg-[#d2e823] hover:bg-[#c1d620] text-black font-bold py-4 px-8 rounded-2xl whitespace-nowrap transition-transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(210,232,35,0.3)] text-lg"
             >
               Claim your Linktree
             </button>
@@ -90,11 +90,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#0f0f0f] py-32 mt-20 relative">
+      <section className="bg-[#0f0f0f] py-20 md:py-32 mt-20 relative">
         <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Create and customize your Linktree in minutes</h2>
-            <p className="text-gray-400 text-lg">Connect your TikTok, Instagram, Twitter, website, store, videos, music, podcast, events and more. It all comes together in a link in bio landing page designed to convert.</p>
+          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20 animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Create and customize your Linktree in minutes</h2>
+            <p className="text-gray-400 text-base md:text-lg">Connect your TikTok, Instagram, Twitter, website, store, videos, music, podcast, events and more. It all comes together in a link in bio landing page designed to convert.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

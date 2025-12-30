@@ -18,11 +18,11 @@ const Navbar = () => {
         ))}
       </div>
 
-      <div className='flex gap-4 items-center'>
-        <Link href="/login" className="hidden md:block text-sm font-semibold hover:text-white transition-colors text-gray-300">
+      <div className='flex gap-3 items-center'>
+        <Link href="/login" className="text-sm font-semibold hover:text-white transition-colors text-gray-300 px-2 py-2">
           Log in
         </Link>
-        <Link href="/signup" className="bg-[#d2e823] hover:bg-[#c1d620] text-black px-6 py-2.5 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(210,232,35,0.3)]">
+        <Link href="/signup" className="bg-[#d2e823] hover:bg-[#c1d620] text-black px-5 py-2.5 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(210,232,35,0.3)] whitespace-nowrap">
           Sign up free
         </Link>
       </div>
